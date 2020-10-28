@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="Description" content="picup.ai提供在线抠图,AI抠图,智能抠图,人像抠图服务，图片风格迁移，帮助设计师和PS使用者加速图片处理">
+  <meta name="Keywords" content="在线抠图,AI抠图,智能抠图,人像抠图,在线人像抠图,人物抠图,在线人物抠图,发丝抠图,ps抠图"/>
+  <meta property="og:url" content="http://www.deeplor.com"/>
+  <meta property="og:type" content="image"/>
+  <meta property="og:title" content="AI智能在线抠图"/>
+  <meta property="og:description" content="picup.ai提供在线抠图,AI抠图,智能抠图,人像抠图服务，图片风格迁移，帮助设计师和PS使用者加速图片处理"/>
+  <meta property="og:image" content="http://deeplor.oss-cn-hangzhou.aliyuncs.com/resource/img/16/16367.png"/>
+  <title>AI智能在线抠图</title>
+  <link rel="stylesheet" href="static/public.css">
+  <link rel="icon" href="static/smallLogo.jpg">
+  <!--标题栏：-->
+  <!--<link rel="icon" href="static/ball.png" type="image/x-icon">-->
+  <!--收藏夹：-->
+  <!--<link rel="shortcut icon" href="static/ball.png" type="image/x-icon">-->
+  <script>
+      var _hmt = _hmt || [];
+      (function () {
+          var hm = document.createElement( "script" );
+          hm.src = "https://hm.baidu.com/hm.js?d0c3d86e06ba2ba79e721da9b0378dcc";
+          var s = document.getElementsByTagName( "script" )[0];
+          s.parentNode.insertBefore( hm, s );
+      })();
+
+      function hashChangeFire() {
+          let url = window.location.href.split( '#' )[2]
+          if (url !== '/') {
+              document.getElementsByClassName( 'content' )[0].style.display = 'none'
+          }
+      }
+
+      //url变化监听器
+      if (('onhashchange' in window) && ((typeof document.documentMode === 'undefined') || document.documentMode == 8)) {
+// 浏览器支持onhashchange事件
+          window.onhashchange = hashChangeFire; // TODO，对应新的hash执行的操作函数
+          console.log( window.location.hash )
+      } else {
+// 不支持则用定时器检测的办法
+          setInterval( function () {
+// 检测hash值或其中某一段是否更改的函数， 在低版本的iE浏览器中通过window.location.hash取出的指和其它的浏览器不同，要注意
+              var ischanged = isHashChanged();
+              if (ischanged) {
+                  hashChangeFire(); // TODO，对应新的hash执行的操作函数
+              }
+          }, 150 );
+      }
+      window.onload = function () {
+          hashChangeFire()
+      }
+  </script>
+</head>
+<style>
+  header {
+    font-size: 14px;
+    color: #fff;
+    line-height: 60px;
+    background: url("static/images/back.jpg") no-repeat center;
+  }
+
+  header .first {
+    margin-bottom: 144px;
+  }
+
+  header li {
+    margin: 0 20px;
+  }
+
+  header li a {
+    color: #fff;
+    display: block;
+  }
+
+  header .big {
+    text-align: center;
+    font-size: 60px;
+    color: #fff;
+    line-height: 80px;
+  }
+
+  header .big p:last-child {
+    font-size: 26px;
+    line-height: normal;
+    text-align: left;
+    text-indent: 330px;
+    padding-bottom: 280px;
+  }
+
+  header .big .a-i {
+    justify-content: center;
+  }
+
+  .content {
+    padding-bottom: 85px;
+  }
+
+  .content .title, .imggs .title {
+    font-size: 34px;
+    padding: 90px 0 80px 0;
+    text-align: center;
+    color: #000;
+    font-weight: 500;
+  }
+
+  .content ul li {
+    font-size: 14px;
+    color: #b4b4b4;
+    text-align: center;
+    width: 225px;
+  }
+
+  .content ul img {
+    display: block;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    margin-bottom: 26px;
+  }
+
+  .content ul h4 {
+    font-size: 20px;
+    color: #262626;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+
+  .content ul p {
+    line-height: 24px;
+  }
+
+  .boke {
+    background-color: #535353;
+    font-size: 20px;
+    line-height: 1;
+    padding: 67px 0 34px;
+  }
+
+  .boke h2 {
+    text-align: center;
+    font-size: 40px;
+    color: #fff;
+    margin: 0 12px 60px 0;
+  }
+
+  .boke a {
+    width: 50%;
+    color: #fff;
+    margin-bottom: 30px;
+  }
+
+  .boke a div {
+    margin-bottom: 10px;
+  }
+
+  .boke a p {
+    font-size: 16px;
+    color: #999;
+  }
+
+  .boke .over {
+    font-weight: bold;
+  }
+
+  footer {
+    background-color: #191919;
+    color: #fff;
+    font-size: 12px;
+    line-height: 20px;
+    padding-top: 62px;
+  }
+
+  footer .margin a {
+    color: #fff;
+    margin-right: 30px;
+  }
+
+  footer li:first-child img {
+    display: block;
+    width: 124px;
+    height: 40px;
+    margin-bottom: 15px;
+  }
+
+  footer ul {
+    padding-bottom: 40px;
+    border-bottom: 1px solid #474747;
+  }
+
+  footer ul h4 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  footer ul li {
+    flex: 1;
+  }
+
+  footer ul li:first-child {
+    width: 405px;
+    margin-right: 110px;
+  }
+
+  footer .last {
+    line-height: 58px;
+    text-align: center;
+  }
+
+  footer ul li .flex p {
+    margin-right: 24px;
+  }
+
+  .wailian {
+    font-size: 12px;
+    color: rgba(250, 250, 250, .2);
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  .wailian a {
+    color: rgba(250, 250, 250, .2);
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  .wailian a:hover {
+    color: #fff;
+  }
+
+  .imggs {
+    background-color: #F5F5F5;
+    padding-bottom: 120px;
+  }
+
+  .imggs .moreImg {
+    display: block;
+    font-size: 16px;
+    line-height: 50px;
+    border-radius: 25px;
+    width: 240px;
+    margin: 0 auto;
+    background-color: #31BCF7;
+    color: #fff;
+    text-align: center;
+  }
+
+  .imggs .tagcloud a {
+    margin: 0 25px 15px 0;
+  }
+
+  .imggs ul {
+    justify-content: center;
+    margin-bottom: 60px;
+  }
+
+  .imggs li {
+    width: 240px;
+    height: 240px;
+    overflow: hidden;
+    border-radius: 5px;
+    margin: 0 20px 20px 0;
+  }
+
+  .imggs li:nth-child(4n) {
+    margin-right: 0;
+  }
+</style>
+<body>
+<header>
+  <img src="static/images/slt.jpg" alt="" style="display: none">
+  <div class="margin flex j-b a-i first">
+    <img src="static/images/logo.png" alt="">
+    <ul class="flex">
+      <li class="cu"><a href="http://matting.deeplor.com/blog" target="_blank">应用场景</a></li>
+      <li class="cu"><a href="http://www.picup.shop/img/list" target="_blank">背景素材大全</a></li>
+      <li class="cu"><a href="http://www.picup.shop/objects.html" target="_blank">智能抠图</a></li>
+      <li class="cu"><a href="http://www.picup.shop/videoMatting.html" target="_blank">抠视频</a></li>
+      <li class="cu"><a href="http://www.picup.shop/idPhoto.html" target="_blank">证件照换底色</a></li>
+      <li class="cu"><a href="http://www.picup.shop/intelligentRepair.html" target="_blank">去水印</a></li>
+      <li class="cu"><a href="http://www.picup.shop/beautify.html" target="_blank">一键ps美图</a></li>
+      <li class="cu"><a href="http://www.picup.shop/headCutout.html" target="_blank">头像分割</a></li>
+      <li class="cu"><a href="http://www.picup.shop/cartoonImage.html" target="_blank">漫画卡通</a></li>
+      <li class="cu"><a href="http://www.picup.shop/userVip.html" target="_blank">会员</a></li>
+      <li class="cu"><a href="http://www.picup.shop/loginOrRegister.html" target="_blank">登录</a></li>
+    </ul>
+  </div>
+  <div class="margin big">
+    <p class="flex a-i">智能一键抠图神器<img src="static/images/free.png" alt=""></p>
+    <p>1 0 0 % 自 动 - 5 秒 - 免 费 背 景 模 板</p>
+  </div>
+</header>
+<div id="app"></div>
+<div class="content">
+  <div class="title">为什么选我们</div>
+  <ul class="flex j-b margin">
+    <li>
+      <img src="static/images/img1.png" alt="">
+      <h4>个人与专业</h4>
+      <p>不论是电商照片、生活照片、旅行照片，大批量抠图总是令人头疼。体验从未有过的简单。</p>
+    </li>
+    <li>
+      <img src="static/images/img2.png" alt="">
+      <h4>节约金钱和时间</h4>
+      <p>花费大量时间?雇佣大量人员?现在有更好的方案了，智能抠图来解放双手，还免费。</p>
+    </li>
+    <li>
+      <img src="static/images/img3.png" alt="">
+      <h4>100%自动化</h4>
+      <p>上传文件或者粘贴URL，仅此而已，无需按像素筛选，无需标注人员物体部位，什么都不用。</p>
+    </li>
+    <li>
+      <img src="static/images/img4.png" alt="">
+      <h4>全套分类模板</h4>
+      <p>海边、树林、高山、街景、超市、东南亚、北欧、美国、日本，免费背景模板，直接选择使用。</p>
+    </li>
+  </ul>
+</div>
+<div class="imggs">
+  <div class="title">免费可商用背景，在线抠图专享</div>
+  <ul class="flex margin f-w">
+    <li><a href="http://www.picup.shop/img/list" target="_blank"><img
+      src="http://deeplor.oss-cn-hangzhou.aliyuncs.com/resource/img/16/16367.png" alt=""></a></li>
+    <li><a href="http://www.picup.shop/img/list" target="_blank"><img
+      src="http://deeplor.oss-cn-hangzhou.aliyuncs.com/resource/img/16/16365.png" alt=""></a></li>
+    <li><a href="http://www.picup.shop/img/list" target="_blank"><img
+      src="http://deeplor.oss-cn-hangzhou.aliyuncs.com/resource/img/16/16327.png" alt=""></a></li>
+    <li><a href="http://www.picup.shop/img/list" target="_blank"><img
+      src="http://deeplor.oss-cn-hangzhou.aliyuncs.com/resource/img/16/16330.png" alt=""></a></li>
+    <li><a href="http://www.picup.shop/img/list" target="_blank"><img
+      src="http://deeplor.oss-cn-hangzhou.aliyuncs.com/resource/img/16/16303.png" alt=""></a></li>
+    <li><a href="http://www.picup.shop/img/list" target="_blank"><img
+      src="http://deeplor.oss-cn-hangzhou.aliyuncs.com/resource/img/16/16276.png" alt=""></a></li>
+    <li><a href="http://www.picup.shop/img/list" target="_blank"><img
+      src="http://deeplor.oss-cn-hangzhou.aliyuncs.com/resource/img/16/16243.png" alt=""></a></li>
+    <li><a href="http://www.picup.shop/img/list" target="_blank"><img
+      src="http://deeplor.oss-cn-hangzhou.aliyuncs.com/resource/img/16/16210.png" alt=""></a></li>
+  </ul>
+  <a class="moreImg" href="http://www.picup.shop/img/list" target="_blank">
+    更多免费背景
+  </a>
+</div>
+<div class="imggs">
+  <div class="title">标签</div>
+  <div class="tagcloud flex f-w margin a-i"><a href="http://matting.deeplor.com/blog/tag/ai%e6%8a%a0%e5%9b%be/"
+                                               class="tag-cloud-link tag-link-16 tag-link-position-1"
+                                               style="font-size: 12.2pt;" aria-label="AI抠图 (2个项目)">AI抠图</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/api/"
+       class="tag-cloud-link tag-link-11 tag-link-position-2" style="font-size: 17.333333333333pt;"
+       aria-label="API (4个项目)">API</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/ps%e6%8a%a0%e5%9b%be/"
+       class="tag-cloud-link tag-link-15 tag-link-position-3" style="font-size: 8pt;" aria-label="ps抠图 (1个项目)">ps抠图</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/removebg/"
+       class="tag-cloud-link tag-link-34 tag-link-position-4" style="font-size: 12.2pt;" aria-label="removebg (2个项目)">removebg</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e4%b8%80%e9%94%ae%e6%8a%a0/"
+       class="tag-cloud-link tag-link-17 tag-link-position-5" style="font-size: 8pt;" aria-label="一键抠 (1个项目)">一键抠</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e4%b8%80%e9%94%ae%e6%8a%a0%e5%9b%be/"
+       class="tag-cloud-link tag-link-8 tag-link-position-6" style="font-size: 22pt;" aria-label="一键抠图 (7个项目)">一键抠图</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e4%b8%aa%e6%80%a7%e5%8c%96%e5%ae%9a%e5%88%b6/"
+       class="tag-cloud-link tag-link-21 tag-link-position-7" style="font-size: 8pt;"
+       aria-label="个性化定制 (1个项目)">个性化定制</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e4%ba%ba%e5%b7%a5%e6%99%ba%e8%83%bd/"
+       class="tag-cloud-link tag-link-45 tag-link-position-8" style="font-size: 8pt;" aria-label="人工智能 (1个项目)">人工智能</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%85%a8%e5%9b%bd%e7%ac%ac%e4%b8%80/"
+       class="tag-cloud-link tag-link-44 tag-link-position-9" style="font-size: 8pt;" aria-label="全国第一 (1个项目)">全国第一</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%85%a8%e7%90%83%e7%ac%ac%e4%ba%8c/"
+       class="tag-cloud-link tag-link-43 tag-link-position-10" style="font-size: 8pt;" aria-label="全球第二 (1个项目)">全球第二</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%88%9b%e6%84%8f/"
+       class="tag-cloud-link tag-link-9 tag-link-position-11" style="font-size: 8pt;" aria-label="创意 (1个项目)">创意</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%8e%bb%e6%b0%b4%e5%8d%b0/"
+       class="tag-cloud-link tag-link-19 tag-link-position-12" style="font-size: 8pt;" aria-label="去水印 (1个项目)">去水印</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%90%8c%e6%a1%86/"
+       class="tag-cloud-link tag-link-14 tag-link-position-13" style="font-size: 8pt;" aria-label="同框 (1个项目)">同框</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%9c%a8%e7%ba%bf%e6%8a%a0%e5%9b%be/"
+       class="tag-cloud-link tag-link-7 tag-link-position-14" style="font-size: 8pt;" aria-label="在线抠图 (1个项目)">在线抠图</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%a4%96%e5%8d%96/"
+       class="tag-cloud-link tag-link-29 tag-link-position-15" style="font-size: 8pt;" aria-label="外卖 (1个项目)">外卖</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%a4%96%e5%8d%96%e6%95%b0%e6%8d%ae/"
+       class="tag-cloud-link tag-link-32 tag-link-position-16" style="font-size: 8pt;" aria-label="外卖数据 (1个项目)">外卖数据</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%a4%b4%e5%83%8f/"
+       class="tag-cloud-link tag-link-33 tag-link-position-17" style="font-size: 8pt;" aria-label="头像 (1个项目)">头像</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%a4%b4%e5%83%8f%e5%88%86%e5%89%b2/"
+       class="tag-cloud-link tag-link-23 tag-link-position-18" style="font-size: 8pt;" aria-label="头像分割 (1个项目)">头像分割</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%a4%b4%e5%83%8f%e6%8a%a0%e5%9b%be/"
+       class="tag-cloud-link tag-link-22 tag-link-position-19" style="font-size: 8pt;" aria-label="头像抠图 (1个项目)">头像抠图</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%ad%a6%e7%94%9f%e8%af%81/"
+       class="tag-cloud-link tag-link-49 tag-link-position-20" style="font-size: 12.2pt;"
+       aria-label="学生证 (2个项目)">学生证</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e5%bc%80%e5%8f%91%e8%80%85/"
+       class="tag-cloud-link tag-link-10 tag-link-position-21" style="font-size: 17.333333333333pt;"
+       aria-label="开发者 (4个项目)">开发者</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e6%8a%a0%e5%9b%be%e6%95%99%e7%a8%8b/"
+       class="tag-cloud-link tag-link-18 tag-link-position-22" style="font-size: 8pt;" aria-label="抠图教程 (1个项目)">抠图教程</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e6%8d%a2%e8%83%8c%e6%99%af/"
+       class="tag-cloud-link tag-link-13 tag-link-position-23" style="font-size: 8pt;" aria-label="换背景 (1个项目)">换背景</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e6%8d%a2%e8%83%8c%e6%99%af%e5%9b%be/"
+       class="tag-cloud-link tag-link-27 tag-link-position-24" style="font-size: 8pt;" aria-label="换背景图 (1个项目)">换背景图</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e6%8d%a2%e8%83%8c%e6%99%af%e8%89%b2/"
+       class="tag-cloud-link tag-link-26 tag-link-position-25" style="font-size: 8pt;" aria-label="换背景色 (1个项目)">换背景色</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e6%8d%a2%e8%a1%a3%e6%9c%8d/"
+       class="tag-cloud-link tag-link-28 tag-link-position-26" style="font-size: 8pt;" aria-label="换衣服 (1个项目)">换衣服</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e6%96%b0%e5%8a%9f%e8%83%bd/"
+       class="tag-cloud-link tag-link-50 tag-link-position-27" style="font-size: 8pt;" aria-label="新功能 (1个项目)">新功能</a>
+    <a target="_blank"
+       href="http://matting.deeplor.com/blog/tag/%e6%97%a0%e5%a4%b4%e5%b0%8f%e4%ba%ba%e6%83%85%e4%be%a3/"
+       class="tag-cloud-link tag-link-24 tag-link-position-28" style="font-size: 8pt;"
+       aria-label="无头小人情侣 (1个项目)">无头小人情侣</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e6%b4%bb%e5%8a%a8/"
+       class="tag-cloud-link tag-link-36 tag-link-position-29" style="font-size: 8pt;" aria-label="活动 (1个项目)">活动</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e7%85%a7%e7%89%87%e4%bf%ae%e5%a4%8d/"
+       class="tag-cloud-link tag-link-20 tag-link-position-30" style="font-size: 8pt;" aria-label="照片修复 (1个项目)">照片修复</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e7%94%b5%e5%95%86/"
+       class="tag-cloud-link tag-link-40 tag-link-position-31" style="font-size: 8pt;" aria-label="电商 (1个项目)">电商</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e7%99%bd%e5%ba%95%e5%9b%be/"
+       class="tag-cloud-link tag-link-39 tag-link-position-32" style="font-size: 8pt;" aria-label="白底图 (1个项目)">白底图</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e7%9a%ae%e5%8d%a1%e6%99%ba%e8%83%bd/"
+       class="tag-cloud-link tag-link-38 tag-link-position-33" style="font-size: 8pt;" aria-label="皮卡智能 (1个项目)">皮卡智能</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e7%ad%be%e8%af%81%e7%85%a7/"
+       class="tag-cloud-link tag-link-52 tag-link-position-34" style="font-size: 8pt;" aria-label="签证照 (1个项目)">签证照</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e7%ae%97%e6%b3%95/"
+       class="tag-cloud-link tag-link-12 tag-link-position-35" style="font-size: 12.2pt;" aria-label="算法 (2个项目)">算法</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e7%ae%97%e6%b3%95%e6%a8%a1%e5%9e%8b/"
+       class="tag-cloud-link tag-link-42 tag-link-position-36" style="font-size: 8pt;" aria-label="算法模型 (1个项目)">算法模型</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e7%bc%96%e8%be%91%e5%99%a8/"
+       class="tag-cloud-link tag-link-48 tag-link-position-37" style="font-size: 8pt;" aria-label="编辑器 (1个项目)">编辑器</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e8%8f%9c%e5%93%81%e5%9b%be%e7%89%87/"
+       class="tag-cloud-link tag-link-31 tag-link-position-38" style="font-size: 8pt;" aria-label="菜品图片 (1个项目)">菜品图片</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e8%8f%9c%e5%93%81%e6%8a%a0%e5%9b%be/"
+       class="tag-cloud-link tag-link-30 tag-link-position-39" style="font-size: 8pt;" aria-label="菜品抠图 (1个项目)">菜品抠图</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e8%af%81%e4%bb%b6%e7%85%a7/"
+       class="tag-cloud-link tag-link-25 tag-link-position-40" style="font-size: 15pt;" aria-label="证件照 (3个项目)">证件照</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e8%af%81%e4%bb%b6%e7%85%a7%e5%b0%ba%e5%af%b8/"
+       class="tag-cloud-link tag-link-51 tag-link-position-41" style="font-size: 8pt;"
+       aria-label="证件照尺寸 (1个项目)">证件照尺寸</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e8%b5%84%e6%a0%bc%e8%af%81/"
+       class="tag-cloud-link tag-link-53 tag-link-position-42" style="font-size: 12.2pt;"
+       aria-label="资格证 (2个项目)">资格证</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e8%b7%a8%e5%a2%83%e7%94%b5%e5%95%86/"
+       class="tag-cloud-link tag-link-41 tag-link-position-43" style="font-size: 8pt;" aria-label="跨境电商 (1个项目)">跨境电商</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e9%80%81%e6%9c%88%e5%8d%a1/"
+       class="tag-cloud-link tag-link-35 tag-link-position-44" style="font-size: 8pt;" aria-label="送月卡 (1个项目)">送月卡</a>
+    <a target="_blank" href="http://matting.deeplor.com/blog/tag/%e9%82%80%e8%af%b7%e7%a0%81/"
+       class="tag-cloud-link tag-link-37 tag-link-position-45" style="font-size: 8pt;" aria-label="邀请码 (1个项目)">邀请码</a>
+  </div>
+</div>
+<div class="boke">
+  <div class="margin">
+    <a href="http://matting.deeplor.com/blog/" target="_blank"><h2>博客 <img
+      src="http://deeplor.oss-cn-hangzhou.aliyuncs.com/upload/image/20200827/8dfde556aca9405b8c70f1395ac8c784.png"
+      alt=""></h2></a>
+    <div class="flex f-w">
+      <a
+        href="http://matting.deeplor.com/blog/2020/08/05/%e6%9c%88%e5%85%a510%e4%b8%87%e7%9a%84%e8%b7%a8%e5%a2%83%e7%94%b5%e5%95%86%e5%a4%a7%e5%8d%96%e5%ae%b6%e6%98%af%e5%a6%82%e4%bd%95%e5%81%9a%e7%99%bd%e5%ba%95%e5%9b%be%e7%9a%84%ef%bc%9f/"
+        target="_blank">
+        <div class="over">月入10万的跨境电商大卖家是如何做白底图的？</div>
+        <p>2020年8月5日</p>
+      </a>
+      <a
+        href="http://matting.deeplor.com/blog/2020/08/02/%e4%b8%80%e9%94%ae%e6%8a%a0%e5%9b%be%e5%8e%bb%e8%83%8c%e6%99%af2-0%e4%b8%8a%e7%ba%bf%ef%bc%8c%e9%80%81699%e5%85%83%e6%9c%88%e5%8d%a1%ef%bc%81/"
+        target="_blank">
+        <div class="over">一键抠图去背景2.0上线，送699元月卡！</div>
+        <p>2020年8月2日</p>
+      </a>
+      <a
+        href="http://matting.deeplor.com/blog/2020/08/01/%e5%a6%82%e4%bd%95%e7%94%a8%e6%89%8b%e6%9c%ba%e6%8b%8d%e5%87%ba%e9%ab%98%e4%b8%8b%e5%8d%95%e7%9a%84%e5%a4%96%e5%8d%96%e8%8f%9c%e5%93%81%e5%9b%be%ef%bc%9f/"
+        target="_blank">
+        <div class="over">如何用手机拍出高下单的外卖菜品图？</div>
+        <p>2020年8月1日</p>
+      </a>
+      <a
+        href="http://matting.deeplor.com/blog/2020/08/01/%e5%a6%82%e4%bd%95%e5%88%b6%e4%bd%9c%e8%af%81%e4%bb%b6%e7%85%a7%e4%b8%80%e9%94%ae%e6%8d%a2%e8%83%8c%e6%99%af%e5%b0%8f%e7%a8%8b%e5%ba%8f%ef%bc%8c%e5%bf%85%e9%a1%bb24k%e7%ba%af%e6%99%ba%e8%83%bd/"
+        target="_blank">
+        <div class="over">如何制作证件照一键换背景小程序，必须24K纯智能无手动？</div>
+        <p>2020年8月1日</p>
+      </a>
+      <a
+        href="http://matting.deeplor.com/blog/2020/08/01/%e6%8a%96%e9%9f%b3%e8%b6%85%e7%81%ab%e6%97%a0%e5%a4%b4%e5%b0%8f%e4%ba%ba%e6%83%85%e4%be%a3%e5%a4%b4%e5%83%8f%e6%8a%a0%e5%9b%be%e6%80%8e%e4%b9%88%e5%88%b6%e4%bd%9c%ef%bc%9f/"
+        target="_blank">
+        <div class="over">抖音超火无头小人情侣头像抠图怎么制作?</div>
+        <p>2020年8月1日</p>
+      </a>
+      <a
+        href="http://matting.deeplor.com/blog/2020/08/01/%e6%97%a0%e9%9c%80ps%ef%bc%8c%e5%9c%a8%e7%ba%bf%e4%ba%ba%e5%b7%a5%e6%99%ba%e8%83%bd%e4%b8%80%e9%94%ae%e5%8e%bb%e6%b0%b4%e5%8d%b0%ef%bc%8c%e4%bf%ae%e5%a4%8d%e5%9b%be%e7%89%87%ef%bc%8c%e6%af%ab%e6%97%a0/"
+        target="_blank">
+        <div class="over">无需PS，在线人工智能一键去水印，修复图片，毫无痕迹！</div>
+        <p>2020年8月1日</p>
+      </a>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="margin">
+    <ul class="flex">
+      <li>
+        <img src="static/images/logo.png" alt="">
+        <p>自助构建人工智能服务视觉应用平台，开创全球首个自助式图像引擎，实现快速服务创建、扩展和维护。企业可以通过简单、快速的API调用，一站式获得多种人工智能技术服务，实现技术与业务的无缝连接。</p>
+      </li>
+      <li>
+        <h4>联系我们</h4>
+        <p>business@deeplor.com</p>
+        <img src="static/wxl.png" alt="" style="display: block;margin-top: 10px">
+      </li>
+      <li>
+        <h4>语言</h4>
+        <div class="flex"><a href="http://www.picup.shop">中文</a> <a href="http://www.picup.ai">English</a></div>
+      </li>
+    </ul>
+  </div>
+  <div class="wailian">
+    友情链接：<a href="http://m.17huo.com" target="_blank">服装批发一手货源</a>
+    <a href="http://m.17huo.com" target="_blank">男装-件代发</a>
+    <a href="http://m.17huo.com" target="_blank">新款女装批发</a>
+    <a href="http://m.17huo.com/mchanpin/2200882.html" target="_blank">瑞丽女装批发</a>
+    <a href="http://www.djcang.com/" target="_blank">大鲸云仓</a>
+    <a href="https://www.wuyouip.com/" target="_blank">无忧IP</a>
+  </div>
+  <div class="last">
+    @ Copyright Deeplor 2018. All Rights reserved
+  </div>
+</footer>
+<!-- built files will be auto injected -->
+</body>
+</html>
